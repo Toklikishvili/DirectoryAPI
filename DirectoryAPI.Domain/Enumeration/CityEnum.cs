@@ -2,10 +2,10 @@
 
 public enum CityEnum
 {
-    Tbilisi,
-    Kutaisi,
     Batumi,
+    Kutaisi,
     Rustavi,
+    Tbilisi,
     Telavi,
     Zugdidi
 }
