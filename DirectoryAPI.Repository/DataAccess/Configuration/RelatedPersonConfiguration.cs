@@ -8,11 +8,17 @@ public class RelatedPersonConfiguration : IEntityTypeConfiguration<RelatedPerson
 {
     public void Configure(EntityTypeBuilder<RelatedPerson> builder)
     {
-        builder
-            .HasKey(r=>r.Id);
-        builder
-            .HasOne(r => r.Person)
+        builder.HasKey(rp => rp.Id);
+        builder.Property(rp => rp.ConnectionType).IsRequired();
+
+        builder.HasOne(rp => rp.Person)
             .WithMany(p => p.RelatedPersons)
-            .HasForeignKey(r => r.PersonId);
+            .HasForeignKey(rp => rp.PersonId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(rp => rp.RelationPerson)
+            .WithMany(p => p.RelationPerson)
+            .HasForeignKey(rp => rp.RelationPersonId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
