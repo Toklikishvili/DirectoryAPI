@@ -8,14 +8,14 @@ public sealed class PersonService : IPersonService
 {
     private readonly IPersonRepository _personRepository;
 
-    public PersonService(IPersonRepository personRepository, IRelatedPersonRepository relatedPersonRepository)
+    public PersonService(IPersonRepository personRepository)
     {
         _personRepository = personRepository ?? throw new ArgumentNullException(nameof(personRepository));
     }
 
     public IEnumerable<Person> GetAll()
     {
-        return _personRepository.SelectAll();
+        return _personRepository.Set();
     }
 
     public IEnumerable<Person> Search(string text)
@@ -44,32 +44,5 @@ public sealed class PersonService : IPersonService
     {
         _personRepository.Delete(id);
         _personRepository.SaveChanges();
-    }
-
-    public void AddRelatedPerson(int personId, RelatedPerson relatedPerson)
-    {
-        var person = _personRepository.Get(personId);
-        if (person != null)
-        {
-            person.RelatedPersons ??= new List<RelatedPerson>();
-            person.RelatedPersons.Add(relatedPerson);
-            _personRepository.Update(person);
-            _personRepository.SaveChanges();
-        }
-    }
-
-    public void DeleteRelatedPerson(int personId, int relatedPersonId)
-    {
-        var person = _personRepository.Get(personId);
-        if (person != null && person.RelatedPersons != null)
-        {
-            var relatedPerson = person.RelatedPersons.FirstOrDefault(rp => rp.Id == relatedPersonId);
-            if (relatedPerson != null)
-            {
-                person.RelatedPersons.Remove(relatedPerson);
-                _personRepository.Update(person);
-                _personRepository.SaveChanges();
-            }
-        }
     }
 }

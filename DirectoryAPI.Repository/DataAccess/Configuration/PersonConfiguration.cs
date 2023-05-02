@@ -21,12 +21,12 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
         builder.HasMany(p => p.RelatedPersons)
             .WithOne(rp => rp.Person)
             .HasForeignKey(rp => rp.PersonId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(p => p.RelationPerson)
             .WithOne(rp => rp.RelationPerson)
             .HasForeignKey(rp => rp.RelationPersonId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
     }
 
     //public void Configure(EntityTypeBuilder<Person> builder)

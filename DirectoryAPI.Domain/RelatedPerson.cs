@@ -11,5 +11,5 @@ public sealed class RelatedPerson
     public Person? Person { get; set; }
 
     public int RelationPersonId { get; set; }
-    public Person? RelationPerson { get; set; }  
+    public Person? RelationPerson { get; set; }
 }
